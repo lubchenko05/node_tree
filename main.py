@@ -113,4 +113,4 @@ c.remove()
 # a.parent = j
 
 # # Check relations
-# print('\n'.join(['%s - %s' % (str(x), str(x.parent or '')) for x in Node.nodes]))
+# print('\n'.join(['%s - %s' % (str(x), str(x.parent or '')) for x in tree.nodes]))
