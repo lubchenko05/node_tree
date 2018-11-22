@@ -9,17 +9,17 @@ class Tree:
         return max(len(node.get_nested_parents()) for node in self.nodes) + 1
 
     @staticmethod
-    def print_tree(head, level=0):
+    def print_tree(head:'Node', level:int=0) -> None:
         offset = '-'*level
         print(offset+head.name)
         for child in head.get_childs():
             Tree.print_tree(child, level=level+1)
     
-    def get_root(self):
+    def get_root(self) -> 'Node' or None:
         return next(iter([node for node in self.nodes if not node.parent] or []), None)
 
 class Node:
-    def __init__(self, name: str, tree: Tree, parent=None):
+    def __init__(self, name: str, tree: Tree, parent:'Node'=None):
         self.name = name
        
         self.tree = tree
@@ -31,7 +31,7 @@ class Node:
     def __str__(self):
         return self.name
 
-    def remove(self):
+    def remove(self) -> None:
         if self.parent:
             for child in self.get_childs():
                 child.parent = self.parent
@@ -40,11 +40,11 @@ class Node:
 
 
     @property
-    def parent(self):
+    def parent(self) -> 'Node':
         return self.__parent
 
     @parent.setter
-    def parent(self, value):
+    def parent(self, value: 'Node'):
         if value in self.get_nested_childs():
             raise NodeException('Loop cached')
         self.__parent = value
@@ -60,7 +60,7 @@ class Node:
         nodes = [node for node in self.tree.nodes if node.parent == self] 
         return nodes
     
-    def get_nested_childs(self) -> set:
+    def get_nested_childs(self) -> list:
         nodes = self.get_childs()
         childs = nodes
         for node in nodes:
